@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Thank You for Your Submission</title>
+<div class="logo-container">
+             <img class="logo" src="{{ url_for('static', filename='downl.png') }}" alt="Logo">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+            margin-top: 100px;
+            transform: scale(0);
+            animation: fadeIn 0.5s ease-in-out 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .animated-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00aaff;
+            margin-top: 20px;
+        }
+
+        .animation-container {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .animation-text {
+            position: absolute;
+            top: 0;
+            left: 100%;
+            animation: moveText 8s linear infinite;
+        }
+
+        @keyframes moveText {
+            0% {
+                left: 100%;
+            }
+            100% {
+                left: -100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Thank You for Your Submission</h1>
+        <div class="animated-text">Your form has been successfully submitted!</div>
+        <div class="animation-container">
+            <div class="animation-text">We appreciate your feedback.</div>
+        </div>
+    </div>
+</body>
+</html>
