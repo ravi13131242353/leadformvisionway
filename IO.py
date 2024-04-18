@@ -2,9 +2,9 @@ from flask import Flask, render_template, request, redirect, url_for
 from pymongo import MongoClient
 
 app = Flask(__name__)
-client = MongoClient("mongodb+srv://ravi:arsh143ravi@cluster0.awcacoq.mongodb.net/")  # Change the MongoDB URI as needed
-db = client["formdata"]  # Change to your database name
-collection = db["gagan"] 
+client = MongoClient("mongodb+srv://vision-immigration-admin:JK8y78**9mk@visionwayinitialcluster.xyjvx7a.mongodb.net/test?")  # Change the MongoDB URI as needed
+db = client["data"]  # Change to your database name
+collection = db["base"] 
 
 @app.route('/')
 def login_form():
