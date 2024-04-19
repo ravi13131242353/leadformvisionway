@@ -10,8 +10,13 @@ collection = db["base"]
 def login_form():
     return render_template('login.html')
 
-@app.route('/login', methods=['POST'])
-def login():
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/submit', methods=['POST'])
+def submit():
+    if request.method == 'POST':
     username = request.form['uname']
     password = request.form['psw']
 
