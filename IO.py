@@ -148,7 +148,7 @@ def index():
 
     return render_template("index.html")  # Render the HTML form
 
-@app.route('/thank_you', methods=['GET'])
+@app.route('/thank_you', methods=['POST'])
 def thank_you():
     return render_template("thanks.html")  # Render the thank_you.html template
 
