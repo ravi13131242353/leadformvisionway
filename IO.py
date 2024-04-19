@@ -6,7 +6,7 @@ client = MongoClient("mongodb+srv://vision-immigration-admin:JK8y78**9mk@visionw
 db = client["data"]  # Change to your database name
 collection = db["base"] 
 @app.route('/submit', methods=['POST'])
-def submit():
+def login():
     if request.method == 'POST':
     username = request.form['uname']
     password = request.form['psw']
