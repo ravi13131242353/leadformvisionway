@@ -5,10 +5,6 @@ app = Flask(__name__)
 client = MongoClient("mongodb+srv://vision-immigration-admin:JK8y78**9mk@visionwayinitialcluster.xyjvx7a.mongodb.net/test?")  # Change the MongoDB URI as needed
 db = client["data"]  # Change to your database name
 collection = db["base"] 
-
-@app.route('/')
-def login_form():
-    return render_template('login.html')
 @app.route('/submit', methods=['POST'])
 def submit():
     if request.method == 'POST':
