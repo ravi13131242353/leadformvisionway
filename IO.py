@@ -9,11 +9,6 @@ collection = db["base"]
 @app.route('/')
 def login_form():
     return render_template('login.html')
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-
 @app.route('/submit', methods=['POST'])
 def submit():
     if request.method == 'POST':
