@@ -147,15 +147,11 @@ def index():
     "pte_ukvi_writing_score": pte_ukvi_writing_score,
     "duolingo_overall_score": duolingo_overall_score
         }
-    
         collection.insert_one(document)
         return redirect(url_for('thank_you'))  # Redirect to the thank_you page
-
-    return render_template("index.html")  # Render the HTML form
-
-@app.route('/thank_you', methods=['POST'])
+    return render_template('index.html')
+@app.route('/thank_you')
 def thank_you():
-    return render_template("thanks.html")  # Render the thank_you.html template
-
+    return render_template('thanks.html')
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True)
