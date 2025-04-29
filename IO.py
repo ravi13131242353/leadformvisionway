@@ -3,7 +3,7 @@ import yt_dlp
 import os
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Needed for flashing messages
+app.secret_key = 'f9b1c2a7a2d34e3c9e2453c2a9946d0d'  # Needed for flashing messages
 
 # Home route with form
 @app.route('/', methods=['GET', 'POST'])
