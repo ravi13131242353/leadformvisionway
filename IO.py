@@ -37,9 +37,9 @@ def index():
 
         except Exception as e:
             flash(f'Error: {str(e)}')
-            return redirect(url_for('index'))
+            return redirect(url_for('thanks'))
 
-    return render_template('index.html')
+    return render_template('thanks.html')
 
 
 if __name__ == '__main__':
