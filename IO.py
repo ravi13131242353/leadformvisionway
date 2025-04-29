@@ -1,61 +1,77 @@
-from flask import Flask, render_template, request, redirect, url_for
-from pymongo import MongoClient
+import tkinter as tk
+from tkinter import messagebox
+import yt_dlp
+import os
 
-app = Flask(__name__)
+# Function to download the video
+def download_video():
+    # Get the URL from the entry widget
+    video_url = url_entry.get()
 
-# MongoDB connection
-client = MongoClient("mongodb+srv://ravi1901275:arsh143ravi@cluster0.awcacoq.mongodb.net/")
-db = client["formdata"]  # Change to your database name
-collection = db["DATA"]
+    if not video_url:
+        messagebox.showerror("Error", "Please enter a valid YouTube video URL.")
+        return
 
-# Route for login page (POST for form submission)
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['uname']
-        password = request.form['psw']
+    # Directory for saving the video
+    download_folder = folder_entry.get()
+    
+    if not download_folder:
+        messagebox.showerror("Error", "Please specify a download folder.")
+        return
 
-        # Check if the password matches
-        if password != '1234':  # Change to the correct password logic
-            return render_template("login.html", error="Invalid credentials")
-        else:
-            return redirect(url_for('index'))  # Redirect to index after successful login
-    return render_template("login.html")
+    # Ensure the folder exists
+    if not os.path.exists(download_folder):
+        os.makedirs(download_folder)
 
-# Route for the index page (Form submission page)
-@app.route('/index', methods=["GET", "POST"])
-def index():
-    if request.method == "POST":
-        # Collect form data
-        first_name = request.form.get('f_name', '')
-        last_name = request.form.get('l_name', '')
-        email = request.form.get('email', '')
-        phone_number = request.form.get('p_number', '')
-        # Collect other fields...
+    # yt-dlp options
+    ydl_opts = {
+        'format': 'best',  # Download the best available quality
+        'outtmpl': os.path.join(download_folder, '%(title)s.%(ext)s'),  # Save the video in the specified folder
+    }
 
-        document = {
-            'first_name': first_name,
-            'last_name': last_name,
-            'email': email,
-            'phone_number': phone_number,
-            # Add other fields here...
-        }
+    # Try to download the video
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([video_url])
+        messagebox.showinfo("Success", "Download completed successfully!")
+    except Exception as e:
+        messagebox.showerror("Error", f"An error occurred: {str(e)}")
 
-        try:
-            # Insert data into MongoDB
-            collection.insert_one(document)
-        except Exception as e:
-            print(f"Error inserting document: {e}")
-            return "Error inserting data"
+# Function to open a folder dialog to select the download folder
+def choose_folder():
+    folder = tk.filedialog.askdirectory()
+    if folder:
+        folder_entry.delete(0, tk.END)
+        folder_entry.insert(0, folder)
 
-        return redirect(url_for('thank_you'))  # Redirect to the thank_you page after form submission
+# Create the main window
+root = tk.Tk()
+root.title("YouTube Video Downloader")
 
-    return render_template('index.html')
+# Set window size
+root.geometry("500x250")
 
-# Route for the thank you page
-@app.route('/thank_you')
-def thank_you():
-    return render_template('thanks.html')
+# Create the URL label and entry widget
+url_label = tk.Label(root, text="Enter YouTube Video URL:")
+url_label.pack(pady=10)
 
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+url_entry = tk.Entry(root, width=50)
+url_entry.pack(pady=5)
+
+# Create the download folder label and entry widget
+folder_label = tk.Label(root, text="Select Download Folder:")
+folder_label.pack(pady=10)
+
+folder_entry = tk.Entry(root, width=50)
+folder_entry.pack(pady=5)
+
+# Create the Browse button for folder selection
+browse_button = tk.Button(root, text="Browse", command=choose_folder)
+browse_button.pack(pady=5)
+
+# Create the download button
+download_button = tk.Button(root, text="Download Video", command=download_video)
+download_button.pack(pady=20)
+
+# Start the GUI event loop
+root.mainloop()
